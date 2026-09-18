@@ -1,4 +1,3 @@
-import functools
 import hashlib
 import re
 import tempfile
@@ -6,8 +5,6 @@ import threading
 import time
 import uuid
 from collections import OrderedDict
-
-from google.api_core import retry as google_retry
 
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
@@ -54,17 +51,6 @@ _llm_lock = threading.Lock()
 _embeddings_singleton = None
 _embeddings_lock = threading.Lock()
 
-_EMBED_NO_RETRY = google_retry.Retry(predicate=lambda exc: False)
-
-
-def _neutralize_retries(client):
-    if client is None:
-        return
-    for name in ("batch_embed_contents", "embed_content"):
-        method = getattr(client, name, None)
-        if method is not None:
-            setattr(client, name, functools.partial(method, retry=_EMBED_NO_RETRY))
-
 
 def _log(step, seconds, cached=False):
     tag = " (cached, skipped)" if cached else ""
@@ -103,8 +89,6 @@ def _get_embeddings():
                 _embeddings_singleton = GoogleGenerativeAIEmbeddings(
                     model=EMBEDDING_MODEL
                 )
-                _neutralize_retries(_embeddings_singleton.client)
-                _neutralize_retries(_embeddings_singleton.async_client)
     return _embeddings_singleton
 
 
