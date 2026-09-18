@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'"
+  />
+  <title>PDF Q&A Chatbot</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app-header">
+      <h1>PDF Q&amp;A Chatbot</h1>
+      <p>Upload a PDF, then ask questions about its contents.</p>
+    </header>
+
+    <section class="card uploader">
+      <input type="file" id="pdf-input" accept="application/pdf" hidden />
+      <button type="button" id="upload-button">Upload PDF</button>
+      <span id="file-status">No PDF selected</span>
+    </section>
+
+    <section class="card chat-card">
+      <div class="chat-toolbar">
+        <span class="chat-title">Chat</span>
+        <button type="button" id="clear-button">Clear chat</button>
+      </div>
+      <div class="chat" id="chat" aria-live="polite"></div>
+    </section>
+
+    <form class="ask" id="question-form">
+      <input
+        type="text"
+        id="question-input"
+        placeholder="Type your question about the PDF..."
+        autocomplete="off"
+      />
+      <button type="submit" id="send-button">Send</button>
+    </form>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

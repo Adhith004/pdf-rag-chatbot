@@ -1,0 +1,10 @@
+flask
+python-dotenv
+pypdf
+google-auth
+google-api-core
+langchain
+langchain-community
+langchain-core
+langchain-google-genai
+langchain-text-splitters
