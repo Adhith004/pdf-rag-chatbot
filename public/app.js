@@ -14,7 +14,10 @@ let pdfFile = null;
 
 uploadButton.addEventListener("click", () => pdfInput.click());
 
-clearButton.addEventListener("click", () => chat.replaceChildren());
+clearButton.addEventListener("click", () => {
+  chat.replaceChildren();
+  renderEmptyState();
+});
 
 pdfInput.addEventListener("change", () => {
   const file = pdfInput.files[0];
@@ -37,7 +40,7 @@ pdfInput.addEventListener("change", () => {
     return;
   }
   pdfFile = file;
-  fileStatus.textContent = `Loaded: ${file.name}`;
+  fileStatus.textContent = `\u2713 ${file.name}`;
   fileStatus.classList.add("is-loaded");
   addMessage("system", `Ready to answer questions about "${file.name}".`);
 });
@@ -102,7 +105,7 @@ function friendlyError(status, data) {
     case "PDF_TOO_LARGE":
       return "The PDF is too large to upload. Please choose a smaller file (max ~3.5 MB).";
     case "RATE_LIMITED":
-      return "Too many requests right now. Wait a minute and try again.";
+      return "Gemini API daily limit reached. Please try again after the quota resets.";
     case "MISSING_API_KEY":
       return "The server is not configured with a Gemini API key yet.";
     case "GEMINI_API_ERROR":
@@ -116,12 +119,33 @@ function friendlyError(status, data) {
 }
 
 function addMessage(role, text) {
+  const empty = chat.querySelector(".empty-state");
+  if (empty) empty.remove();
   const el = document.createElement("div");
   el.className = `message ${role}`;
   el.textContent = text;
   chat.appendChild(el);
   scrollToBottom();
 }
+
+function renderEmptyState() {
+  const el = document.createElement("div");
+  el.className = "empty-state";
+  el.innerHTML =
+    '<svg viewBox="0 0 48 48" width="52" height="52" aria-hidden="true">' +
+    '<rect x="11" y="5" width="26" height="34" rx="3.5" fill="#ffffff" stroke="#2f63c4" stroke-width="2.5"/>' +
+    '<path d="M31 5l6 6h-6V5z" fill="#d9e6fa"/>' +
+    '<line x1="17" y1="19" x2="31" y2="19" stroke="#9db9e8" stroke-width="2.5" stroke-linecap="round"/>' +
+    '<line x1="17" y1="25" x2="31" y2="25" stroke="#9db9e8" stroke-width="2.5" stroke-linecap="round"/>' +
+    '<line x1="17" y1="31" x2="26" y2="31" stroke="#c3d5f2" stroke-width="2.5" stroke-linecap="round"/>' +
+    '<circle cx="35" cy="12" r="3.5" fill="#e8934a"/>' +
+    "</svg>" +
+    "<strong>Ask anything about your document</strong>" +
+    "<span>Upload a PDF and ask a question to get started.</span>";
+  chat.appendChild(el);
+}
+
+renderEmptyState();
 
 function addTypingIndicator() {
   const el = document.createElement("div");
