@@ -7,23 +7,24 @@
     http-equiv="Content-Security-Policy"
     content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'"
   />
-  <title>PDF Q&A Chatbot</title>
+  <title>AskDoc AI ChatBot</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main class="app">
     <header class="app-header">
-      <h1>PDF Q&amp;A Chatbot</h1>
-      <p>Upload a PDF, then ask questions about its contents.</p>
+      <span class="brand-mark" aria-hidden="true"></span>
+      <h1>AskDoc AI ChatBot</h1>
+      <p>Upload a PDF and ask questions about its contents.</p>
     </header>
 
-    <section class="card uploader">
+    <section class="card uploader" aria-label="PDF upload">
       <input type="file" id="pdf-input" accept="application/pdf" hidden />
       <button type="button" id="upload-button">Upload PDF</button>
       <span id="file-status">No PDF selected</span>
     </section>
 
-    <section class="card chat-card">
+    <section class="card chat-card" aria-label="Conversation">
       <div class="chat-toolbar">
         <span class="chat-title">Chat</span>
         <button type="button" id="clear-button">Clear chat</button>
@@ -32,6 +33,7 @@
     </section>
 
     <form class="ask" id="question-form">
+      <label class="visually-hidden" for="question-input">Ask a question about the PDF</label>
       <input
         type="text"
         id="question-input"
@@ -40,6 +42,8 @@
       />
       <button type="submit" id="send-button">Send</button>
     </form>
+
+    <footer class="app-footer">Developed by Adhith V</footer>
   </main>
   <script src="app.js"></script>
 </body>

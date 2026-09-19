@@ -21,20 +21,24 @@ pdfInput.addEventListener("change", () => {
   if (!file) {
     pdfFile = null;
     fileStatus.textContent = "No PDF selected";
+    fileStatus.classList.remove("is-loaded");
     return;
   }
   if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
     pdfFile = null;
     fileStatus.textContent = "Please choose a PDF file.";
+    fileStatus.classList.remove("is-loaded");
     return;
   }
   if (file.size > MAX_PDF_BYTES) {
     pdfFile = null;
     fileStatus.textContent = `This file is too large (max ${MAX_PDF_BYTES / 1_000_000} MB).`;
+    fileStatus.classList.remove("is-loaded");
     return;
   }
   pdfFile = file;
   fileStatus.textContent = `Loaded: ${file.name}`;
+  fileStatus.classList.add("is-loaded");
   addMessage("system", `Ready to answer questions about "${file.name}".`);
 });
 
