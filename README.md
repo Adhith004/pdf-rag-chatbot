@@ -1,4 +1,4 @@
-# AshDoc AI Chatbot
+# AskDoc AI Chatbot
 
 A simple Retrieval-Augmented Generation (RAG) chatbot that answers questions about an
 uploaded PDF. Built with Python, LangChain, and Google Gemini, with a plain
