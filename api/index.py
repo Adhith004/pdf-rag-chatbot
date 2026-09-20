@@ -1,4 +1,5 @@
-import os #index.py is the Flask backend server that receives PDF uploads and questions, calls the RAG logic in rag.py, and returns AI-generated answers to the user.
+import os #index.py is the Flask backend server that receives PDF uploads and questions,
+#calls the RAG logic in rag.py, and returns AI-generated answers to the user.
 import sys
 import time
 from pathlib import Path
