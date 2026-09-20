@@ -3,7 +3,7 @@ const MAX_PDF_BYTES = 3_500_000; //app.js is the frontend JavaScript file of my 
 //displays answers from Gemini, and manages the chat interface.
 const MAX_QUESTION_CHARS = 2000;
 
-const pdfInput = document.getElementById("pdf-input");
+const pdfInput = document.getElementById("pdf-input");//Connects JavaScript to HTML elements
 const uploadButton = document.getElementById("upload-button");
 const fileStatus = document.getElementById("file-status");
 const chat = document.getElementById("chat");
