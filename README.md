@@ -2,8 +2,7 @@
 
 A simple Retrieval-Augmented Generation (RAG) chatbot that answers questions about an
 uploaded PDF. Built with Python, LangChain, and Google Gemini, with a plain
-HTML/CSS/JavaScript frontend, deployed as Vercel serverless functions. No Git/GitHub
-required to deploy.
+HTML/CSS/JavaScript frontend, deployed as Vercel serverless functions.
 
 ## How it works
 
@@ -42,11 +41,11 @@ understand. It is intentionally scoped to small/medium PDFs.
 
 ## Stack
 
-- Python backend as a Vercel serverless function (WSGI, Flask). No FastAPI, no Streamlit.
+- Python backend as a Vercel serverless function (WSGI, Flask).
 - LangChain (`langchain-google-genai`, `langchain-community`, `langchain-core`,
   `langchain-text-splitters`).
 - Google Gemini for embeddings (`gemini-embedding-001`) and generation (`gemini-3.6-flash`).
-- Vanilla HTML/CSS/JavaScript frontend - no build step.
+- HTML/CSS/JavaScript frontend.
 
 ## API contract
 
