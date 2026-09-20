@@ -133,7 +133,7 @@ body {
   box-shadow: var(--shadow);
 }
 
-.uploader {
+.uploader {   /*uploader*/
   display: flex;
   align-items: center;
   gap: 14px;
