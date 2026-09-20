@@ -1,4 +1,6 @@
-const MAX_PDF_BYTES = 3_500_000; //javascript
+const MAX_PDF_BYTES = 3_500_000; //app.js is the frontend JavaScript file of my PDF chatbot.
+//It handles PDF uploads, validates files, sends user questions to the backend API,
+//displays answers from Gemini, and manages the chat interface.
 const MAX_QUESTION_CHARS = 2000;
 
 const pdfInput = document.getElementById("pdf-input");
