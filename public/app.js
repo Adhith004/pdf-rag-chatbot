@@ -1,4 +1,4 @@
-const MAX_PDF_BYTES = 3_500_000;
+const MAX_PDF_BYTES = 3_500_000; //javascript
 const MAX_QUESTION_CHARS = 2000;
 
 const pdfInput = document.getElementById("pdf-input");
