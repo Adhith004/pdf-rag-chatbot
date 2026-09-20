@@ -41,7 +41,7 @@ understand. It is intentionally scoped to small/medium PDFs.
 
 ## Stack
 
-- Python backend as a Vercel serverless function (WSGI, Flask).
+- Python backend as a Vercel serverless function.
 - LangChain (`langchain-google-genai`, `langchain-community`, `langchain-core`,
   `langchain-text-splitters`).
 - Google Gemini for embeddings (`gemini-embedding-001`) and generation (`gemini-3.6-flash`).
