@@ -1,7 +1,7 @@
-# PDF Q&A Chatbot
+# AshDoc AI Chatbot
 
 A simple Retrieval-Augmented Generation (RAG) chatbot that answers questions about an
-uploaded PDF. Built with Python, Flask, LangChain, and Google Gemini, with a plain
+uploaded PDF. Built with Python, LangChain, and Google Gemini, with a plain
 HTML/CSS/JavaScript frontend, deployed as Vercel serverless functions. No Git/GitHub
 required to deploy.
 
@@ -100,9 +100,8 @@ cp .env.example .env          # then paste your real key into .env
 python -m flask --app api/index.py:app run --port 5000
 ```
 
-Open http://localhost:5000, upload a PDF (max ~3.5 MB), and ask a question.
 
-## Deploying to Vercel (no Git required)
+## Deploying to Vercel
 
 1. Install the Vercel CLI: `npm i -g vercel` (or use `npx vercel`).
 2. Log in: `vercel login`.
