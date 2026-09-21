@@ -1,29 +1,16 @@
 import os #index.py is the Flask backend server that receives PDF uploads and questions,
 #calls the RAG logic in rag.py, and returns AI-generated answers to the user.
 import sys
-import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from flask import Flask, jsonify, request, send_from_directory
 
-from langchain_google_genai._common import GoogleGenerativeAIError
-
 from google.api_core.exceptions import GoogleAPIError, ResourceExhausted
 from google.auth.exceptions import DefaultCredentialsError
 
 from rag import answer_question
-
-
-def _is_quota_error(exc):
-    seen = set()
-    while exc is not None and id(exc) not in seen:
-        seen.add(id(exc))
-        if isinstance(exc, ResourceExhausted):
-            return True
-        exc = getattr(exc, "__cause__", None)
-    return False
 
 app = Flask(__name__)
 
@@ -96,52 +83,30 @@ def answer():
             500,
         )
 
-    request_started = time.perf_counter()
-
     try:
         answer_text = answer_question(pdf_bytes, question)
-        app.logger.info(
-            "Backend total: %.2f seconds", time.perf_counter() - request_started
-        )
     except ValueError as exc:
-        app.logger.exception("ValueError during answer_question")
         return _error("NO_READABLE_TEXT", str(exc), 422)
     except ResourceExhausted:
-        app.logger.exception("Gemini rate limited")
         return _error(
             "RATE_LIMITED",
             "Gemini is rate-limiting requests right now. Wait a moment and try again.",
             429,
         )
     except DefaultCredentialsError:
-        app.logger.exception("Google credentials error")
         return _error(
             "MISSING_API_KEY",
             "The Gemini API key is missing or invalid on the server.",
             500,
         )
-    except GoogleGenerativeAIError as exc:
-        app.logger.exception("Gemini (langchain) API error: %s", exc)
-        if _is_quota_error(exc):
-            return _error(
-                "RATE_LIMITED",
-                "Gemini is rate-limiting requests right now. Wait a moment and try again.",
-                429,
-            )
-        return _error(
-            "GEMINI_API_ERROR",
-            "Gemini could not answer the question. Please try again.",
-            502,
-        )
     except GoogleAPIError as exc:
-        app.logger.exception("Gemini API error: %s", exc)
+        app.logger.warning("Gemini API error: %s", exc)
         return _error(
             "GEMINI_API_ERROR",
             "Gemini could not answer the question. Please try again.",
             502,
         )
     except Exception:
-        app.logger.exception("Unexpected error during answer_question")
         return _error(
             "SERVER_ERROR", "Something went wrong on the server. Please try again.", 500
         )
